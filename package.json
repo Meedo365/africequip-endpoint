@@ -1,0 +1,33 @@
+{
+  "name": "africequip-endpoint",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "NuhuAhmed",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^6.0.6",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-session": "^1.17.3",
+    "googleapis": "^107.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.5",
+    "multer": "^1.4.4",
+    "node-fetch": "^3.2.10",
+    "nodemailer": "^6.7.8",
+    "nodemon": "^2.0.15",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^7.1.2"
+  }
+}
