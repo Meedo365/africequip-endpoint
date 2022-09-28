@@ -9,9 +9,9 @@ const routes = require('./routes');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 // offline
-const CONNECTION_STRING = "mongodb://localhost:27017/africequip";
+// const CONNECTION_STRING = "mongodb://localhost:27017/africequip";
 // online
-// const CONNECTION_STRING = "";
+const CONNECTION_STRING = "mongodb+srv://meedoMontana:MontanaMongo01@myafricequipdb.rsxoiac.mongodb.net/africequip";
 
 mongoose.connect(CONNECTION_STRING, {
 	useNewUrlParser: true,
