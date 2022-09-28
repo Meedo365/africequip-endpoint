@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 // const PORT = 5001;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5001;
 // offline
 const cors = require('cors');
 const routes = require('./routes');
@@ -21,8 +21,6 @@ mongoose.connect(CONNECTION_STRING, {
 
 mongoose.connection.on('open', () => console.log('Mongo Running'));
 mongoose.connection.on('error', (err) => console.log(err));
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
