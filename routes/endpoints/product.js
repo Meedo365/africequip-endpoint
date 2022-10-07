@@ -1,16 +1,60 @@
 const Product = require('../../models/products');
+const multer = require('multer');
+const { isLoggedIn } = require('../../middleware');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads/')
+    },
+    filename: function (req, files, cb) {
+        cb(null, new Date().getMilliseconds() + files.originalname);
+    }
+});
+const upload = multer({ storage: storage }).array('images', 4);
 
 let routes = (app) => {
 
     app.post('/product', async (req, res) => {
-        try {
-            let product = new Product(req.body);
-            await product.save()
-            res.json(product)
-        }
-        catch (err) {
-            res.status(500).send(err)
-        }
+        upload(req, res, async (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if (req.files) {
+                    const reqFiles = [];
+                    for (let i = 0; i < req.files.length; i++) {
+                        reqFiles.push('/' + req.files[i].path)
+                    }
+                    req.body.images = reqFiles;
+                    try {
+                        const { itemName, price, transmission, user_id,
+                            year, model, location_id, subCategory_id, category_id } = req.body;
+                        if (!itemName || !price || !year || !transmission || !model ||
+                            !location_id || !subCategory_id || !user_id || !category_id)
+                            return res.status(400).json({ msg: "Please fill in all fields, one or more fileds are empty!" })
+                        let product = new Product(req.body);
+                        await product.save()
+                        res.json({ msg: "Product Listing Created" })
+                    }
+                    catch (err) {
+                        return res.status(500).send('err');
+                    }
+                } else {
+                    req.body.images = ['/uploads//325picture.jpg']
+                    try {
+                        const { itemName, price, transmission, user_id,
+                            year, model, location_id, subCategory_id, category_id } = req.body;
+                        if (!itemName || !price || !year || !transmission || !model ||
+                            !location_id || !subCategory_id || !user_id || !category_id)
+                            return res.status(400).json({ msg: "Please fill in all fields, one or more fileds are empty!" })
+                        let product = new Product(req.body);
+                        await product.save()
+                        res.json({ msg: "Product Listing Created" })
+                    }
+                    catch (err) {
+                        return res.status(500).send(err);
+                    }
+                }
+            }
+        });
     });
 
     // get all products
@@ -26,7 +70,6 @@ let routes = (app) => {
                         path: "category_id"
                     }
                 })
-            // .populate("subCategory_id.category_id")
             res.json(products)
         }
         catch (err) {

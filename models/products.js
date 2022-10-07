@@ -4,8 +4,7 @@ const ProductSchema = new mongoose.Schema({
     itemName: { type: String, required: true },
     price: { type: String, default: 'Contact Us' },
     images: {
-        type: Array,
-        default: ['https://africequip.com/storage/app/default/picture.jpg']
+        type: Array
     },
     brand: { type: String, default: 'Other' },
     transmission: { type: String },
@@ -30,8 +29,7 @@ const ProductSchema = new mongoose.Schema({
     },
     category_id: {
         type: mongoose.Types.ObjectId,
-        ref: "categories",
-        default: "63300afe2c9c5ceb9fdfa5bc"
+        ref: "categories"
     }
 }, {
     timestamps: true
