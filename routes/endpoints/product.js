@@ -28,7 +28,7 @@ let routes = (app) => {
                     try {
                         const { itemName, price, transmission, user_id,
                             year, model, location_id, subCategory_id, category_id } = req.body;
-                        if (!itemName || !price || !year || !transmission || !model ||
+                        if (!itemName || !year || !transmission || !model ||
                             !location_id || !subCategory_id || !user_id || !category_id)
                             return res.status(400).json({ msg: "Please fill in all fields, one or more fileds are empty!" })
                         let product = new Product(req.body);
@@ -43,7 +43,7 @@ let routes = (app) => {
                     try {
                         const { itemName, price, transmission, user_id,
                             year, model, location_id, subCategory_id, category_id } = req.body;
-                        if (!itemName || !price || !year || !transmission || !model ||
+                        if (!itemName || !year || !transmission || !model ||
                             !location_id || !subCategory_id || !user_id || !category_id)
                             return res.status(400).json({ msg: "Please fill in all fields, one or more fileds are empty!" })
                         let product = new Product(req.body);
