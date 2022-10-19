@@ -1,6 +1,7 @@
 const Product = require('../../models/products');
+
 const multer = require('multer');
-const { isLoggedIn } = require('../../middleware');
+// const { isLoggedIn } = require('../../middleware');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './uploads/')
@@ -61,6 +62,26 @@ let routes = (app) => {
     app.get('/products', async (req, res) => {
         try {
             let products = await Product.find().sort({ createdAt: -1 })
+                .populate("user_id")
+                .populate("location_id")
+                .populate("category_id")
+                .populate({
+                    path: "subCategory_id",
+                    populate: {
+                        path: "category_id"
+                    }
+                })
+            res.json(products)
+        }
+        catch (err) {
+            res.status(500).send(err)
+        }
+    });
+
+    // get products for pagination
+    app.get('/product/1', async (req, res) => {
+        try {
+            let products = await Product.find().sort({ createdAt: -1 }).skip(0)
                 .populate("user_id")
                 .populate("location_id")
                 .populate("category_id")
