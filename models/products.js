@@ -4,7 +4,8 @@ const ProductSchema = new mongoose.Schema({
     itemName: { type: String, required: true },
     price: { type: String, default: 'Contact Us' },
     images: {
-        type: Array
+        type: Array,
+        default: ['/uploads//325picture.jpg']
     },
     brand: { type: String, default: 'Other' },
     transmission: { type: String },

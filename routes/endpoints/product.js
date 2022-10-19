@@ -39,7 +39,7 @@ let routes = (app) => {
                         return res.status(500).send('err');
                     }
                 } else {
-                    req.body.images = ['/uploads//325picture.jpg']
+                    req.body.images = ['/uploads//325picture.jpg'];
                     try {
                         const { itemName, price, transmission, user_id,
                             year, model, location_id, subCategory_id, category_id } = req.body;
