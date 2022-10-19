@@ -2,17 +2,17 @@ require('dotenv').config()
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const PORT = 5001;
-// const PORT = process.env.PORT || 5001;
+// const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 // offline
 const cors = require('cors');
 const routes = require('./routes');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 // offline
-const CONNECTION_STRING = "mongodb://localhost:27017/africequip";
+// const CONNECTION_STRING = "mongodb://localhost:27017/africequip";
 // online
-// const CONNECTION_STRING = "mongodb+srv://meedoMontana:MontanaMongo01@myafricequipdb.rsxoiac.mongodb.net/africequip";
+const CONNECTION_STRING = "mongodb+srv://meedoMontana:MontanaMongo01@myafricequipdb.rsxoiac.mongodb.net/africequip";
 
 mongoose.connect(CONNECTION_STRING, {
 	useNewUrlParser: true,
