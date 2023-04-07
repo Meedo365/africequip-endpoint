@@ -2,6 +2,8 @@ const Product = require('../../models/products');
 
 const multer = require('multer');
 // const { isLoggedIn } = require('../../middleware');
+const cloudinary = require('cloudinary').v2;
+const paginate = require('jw-paginate');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './uploads/')
@@ -10,7 +12,31 @@ const storage = multer.diskStorage({
         cb(null, new Date().getMilliseconds() + files.originalname);
     }
 });
+const fs = require('fs');
 const upload = multer({ storage: storage }).array('images', 4);
+
+// cloudinary configuration
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET
+});
+
+async function uploadToCloudinary(locaFilePath) {
+    var mainFolderName = "ndembele"
+    var filePathOnCloudinary = mainFolderName + "/" + locaFilePath;
+    return cloudinary.uploader.upload(locaFilePath)
+        .then((result) => {
+            fs.unlinkSync(locaFilePath)
+            return {
+                message: "Success",
+                url: result.url
+            };
+        }).catch((error) => {
+            fs.unlinkSync(locaFilePath)
+            return { message: "Fail", };
+        });
+};
 
 let routes = (app) => {
 
@@ -18,11 +44,14 @@ let routes = (app) => {
         upload(req, res, async (err) => {
             if (err) {
                 console.log(err);
+                return res.json({ msg: "File Missing " })
             } else {
                 if (req.files) {
                     const reqFiles = [];
                     for (let i = 0; i < req.files.length; i++) {
-                        reqFiles.push('/' + req.files[i].path)
+                        var locaFilePath = req.files[i].path
+                        var result = await uploadToCloudinary(locaFilePath);
+                        reqFiles.push(result.url)
                     }
                     req.body.images = reqFiles;
                     try {
